@@ -26,22 +26,18 @@ class UserController {
         var {name, email, password, role} = req.body
 
         if (name == undefined) {
-            res.status(400)
             res.json({error: "Name is required!"})
             return
         }
         if (email == undefined) {
-            res.status(400)
             res.json({error: "E-mail is required!"})
             return
         }
         if (password == undefined) {
-            res.status(400)
             res.json({error: "Password is required!"})
             return
         }
         if (role == undefined) {
-            res.status(400)
             res.json({error: "Role is required!"})
             return
         }
@@ -49,13 +45,12 @@ class UserController {
         var emailExists = await User.findEmail(email)
 
         if (emailExists) {
-            res.status(406)
             res.json({error: "This email is already registered."})
             return
         }
 
         await User.insert(name,email,password,role)
-        res.json({sucess: "Registration done!"})
+        res.json({success: "Registration done!"})
     }
 
     async edit(req, res) {
@@ -112,7 +107,6 @@ class UserController {
                 var token = jwt.sign({id: user.id, name: user.name, email: user.email, roel: user.role}, process.env.SECRET)
                 res.json({token: token})
             }else {
-                res.status(406)
                 res.json({error: "Incorrect password!"})
             }            
         }else {
